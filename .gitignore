@@ -1,3 +1,4 @@
 docker-compose.yaml
 config.go
 Makefile
+local.yaml

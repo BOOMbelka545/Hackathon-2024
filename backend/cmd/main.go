@@ -1,7 +1,14 @@
 package main
 
+import (
+	"donPass/backend/internal/config"
+	"fmt"
+)
+
 func main() {
-	//TODO: config init
+	cfg := config.MustLoad()
+
+	fmt.Println(cfg)
 
 	//TODO: init storage
 
