@@ -22,7 +22,7 @@ type (
 	}
 
 	DB struct {
-		DBAddress string `yaml:"address" env-default:"localhost:5433"`
+		DBAddress string `yaml:"address" env-default:"localhost:5432"`
 		User      string `yaml:"user" env-required:"true"`
 		Password  string `yaml:"password" env-required:"true"`
 		NameDB    string `yaml:"name_db" env-required:"true"`

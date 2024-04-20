@@ -14,18 +14,20 @@ import (
 const createAccount = `-- name: CreateAccount :one
 INSERT INTO accounts (
   number, 
+  password,
   first_name,
   name,
   last_name,
   balance
 ) VALUES (
-  $1, $2, $3, $4, $5
+  $1, $2, $3, $4, $5, $6
 )
-RETURNING id, number, first_name, name, last_name, balance, created_at
+RETURNING id, number, password, first_name, name, last_name, balance, created_at
 `
 
 type CreateAccountParams struct {
 	Number    string
+	Password  string
 	FirstName string
 	Name      string
 	LastName  pgtype.Text
@@ -35,6 +37,7 @@ type CreateAccountParams struct {
 func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error) {
 	row := q.db.QueryRow(ctx, createAccount,
 		arg.Number,
+		arg.Password,
 		arg.FirstName,
 		arg.Name,
 		arg.LastName,
@@ -44,6 +47,7 @@ func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (A
 	err := row.Scan(
 		&i.ID,
 		&i.Number,
+		&i.Password,
 		&i.FirstName,
 		&i.Name,
 		&i.LastName,
@@ -63,17 +67,39 @@ func (q *Queries) DeleteAccount(ctx context.Context, id int64) error {
 	return err
 }
 
-const getAccount = `-- name: GetAccount :one
-SELECT id, number, first_name, name, last_name, balance, created_at FROM accounts
+const getAccountByID = `-- name: GetAccountByID :one
+SELECT id, number, password, first_name, name, last_name, balance, created_at FROM accounts
 WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetAccount(ctx context.Context, id int64) (Account, error) {
-	row := q.db.QueryRow(ctx, getAccount, id)
+func (q *Queries) GetAccountByID(ctx context.Context, id int64) (Account, error) {
+	row := q.db.QueryRow(ctx, getAccountByID, id)
 	var i Account
 	err := row.Scan(
 		&i.ID,
 		&i.Number,
+		&i.Password,
+		&i.FirstName,
+		&i.Name,
+		&i.LastName,
+		&i.Balance,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const getAccountByNumber = `-- name: GetAccountByNumber :one
+SELECT id, number, password, first_name, name, last_name, balance, created_at FROM accounts
+WHERE number = $1 LIMIT 1
+`
+
+func (q *Queries) GetAccountByNumber(ctx context.Context, number string) (Account, error) {
+	row := q.db.QueryRow(ctx, getAccountByNumber, number)
+	var i Account
+	err := row.Scan(
+		&i.ID,
+		&i.Number,
+		&i.Password,
 		&i.FirstName,
 		&i.Name,
 		&i.LastName,
@@ -84,7 +110,7 @@ func (q *Queries) GetAccount(ctx context.Context, id int64) (Account, error) {
 }
 
 const getAccountForUpdate = `-- name: GetAccountForUpdate :one
-SELECT id, number, first_name, name, last_name, balance, created_at FROM accounts
+SELECT id, number, password, first_name, name, last_name, balance, created_at FROM accounts
 WHERE id = $1 LIMIT 1
 FOR UPDATE
 `
@@ -95,6 +121,7 @@ func (q *Queries) GetAccountForUpdate(ctx context.Context, id int64) (Account, e
 	err := row.Scan(
 		&i.ID,
 		&i.Number,
+		&i.Password,
 		&i.FirstName,
 		&i.Name,
 		&i.LastName,
@@ -105,7 +132,7 @@ func (q *Queries) GetAccountForUpdate(ctx context.Context, id int64) (Account, e
 }
 
 const listAccounts = `-- name: ListAccounts :many
-SELECT id, number, first_name, name, last_name, balance, created_at FROM accounts
+SELECT id, number, password, first_name, name, last_name, balance, created_at FROM accounts
 ORDER BY id
 LIMIT $1
 OFFSET $2
@@ -128,6 +155,7 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]A
 		if err := rows.Scan(
 			&i.ID,
 			&i.Number,
+			&i.Password,
 			&i.FirstName,
 			&i.Name,
 			&i.LastName,
@@ -144,24 +172,53 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]A
 	return items, nil
 }
 
-const updateAccount = `-- name: UpdateAccount :one
+const updateAccountBalance = `-- name: UpdateAccountBalance :one
 UPDATE accounts
   set balance = $2
 WHERE id = $1
-RETURNING id, number, first_name, name, last_name, balance, created_at
+RETURNING id, number, password, first_name, name, last_name, balance, created_at
 `
 
-type UpdateAccountParams struct {
+type UpdateAccountBalanceParams struct {
 	ID      int64
 	Balance int64
 }
 
-func (q *Queries) UpdateAccount(ctx context.Context, arg UpdateAccountParams) (Account, error) {
-	row := q.db.QueryRow(ctx, updateAccount, arg.ID, arg.Balance)
+func (q *Queries) UpdateAccountBalance(ctx context.Context, arg UpdateAccountBalanceParams) (Account, error) {
+	row := q.db.QueryRow(ctx, updateAccountBalance, arg.ID, arg.Balance)
 	var i Account
 	err := row.Scan(
 		&i.ID,
 		&i.Number,
+		&i.Password,
+		&i.FirstName,
+		&i.Name,
+		&i.LastName,
+		&i.Balance,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const updateAccountPassword = `-- name: UpdateAccountPassword :one
+UPDATE accounts
+  set password = $2
+WHERE id = $1
+RETURNING id, number, password, first_name, name, last_name, balance, created_at
+`
+
+type UpdateAccountPasswordParams struct {
+	ID       int64
+	Password string
+}
+
+func (q *Queries) UpdateAccountPassword(ctx context.Context, arg UpdateAccountPasswordParams) (Account, error) {
+	row := q.db.QueryRow(ctx, updateAccountPassword, arg.ID, arg.Password)
+	var i Account
+	err := row.Scan(
+		&i.ID,
+		&i.Number,
+		&i.Password,
 		&i.FirstName,
 		&i.Name,
 		&i.LastName,

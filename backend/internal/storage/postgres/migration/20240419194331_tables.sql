@@ -4,6 +4,7 @@ SELECT 'up SQL query';
 CREATE TABLE "accounts" (
   "id" bigserial PRIMARY KEY,
   "number" varchar NOT NULL,
+  "password" varchar NOT NULL,
   "first_name" varchar NOT NULL,
   "name" varchar NOT NULL,
   "last_name" varchar,
