@@ -10,23 +10,22 @@ import (
 
 type (
 	Config struct {
-		Env         string `yaml:"env" env-default:"local"`
-		StoragePath string `yaml:"storage_path" env-required:"true"`
-		HTTPServer  `yaml:"http_server"`
-		DB          `yaml:"db"`
+		Env        string `yaml:"env" env-default:"local"`
+		HTTPServer `yaml:"http_server"`
+		DB         `yaml:"db"`
 	}
 
 	HTTPServer struct {
-		Address     string        `yaml:"address" env-default:"localhost:8080"`
+		HTTPAddress string        `yaml:"address" env-default:"localhost:8080"`
 		TimeOut     time.Duration `yaml:"timeout" env-default:"4s"`
 		IdleTimeOut time.Duration `yaml:"idle_timeout" env-default:"60s"`
 	}
 
 	DB struct {
-		Address  string `yaml:"address" env-default:"localhost:5432"`
-		User     string `yaml:"user" env-required:"true"`
-		Password string `yaml:"password" env-required:"true"`
-		NameDB   string `yaml:"name_db" env-required:"true"`
+		DBAddress string `yaml:"address" env-default:"localhost:5433"`
+		User      string `yaml:"user" env-required:"true"`
+		Password  string `yaml:"password" env-required:"true"`
+		NameDB    string `yaml:"name_db" env-required:"true"`
 	}
 )
 

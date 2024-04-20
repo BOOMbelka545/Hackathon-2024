@@ -18,7 +18,7 @@ CREATE TABLE "entries" (
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
-CREATE INDEX ON "accounts" ("owner");
+CREATE INDEX ON "accounts" ("number");
 
 CREATE INDEX ON "entries" ("account_id");
 
