@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=josefin+Sans:wght@400;500;600;700&display=swap');
+
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', sans-serif;
+} */
+
+.container_a {
+    width: fit-content;
+    background: #ffffff;
+    display: flex;
+    align-items: right;
+    justify-content: right;
+}
+
+.card_a {
+    width: 500px;
+    height: 300px;
+    color: #ffffff;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+.front {
+    width: 100%;
+    height: 100%;
+    background-image: url('https://i.postimg.cc/gJBhv33g/2024-04-20-185537870.png');
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 1;
+    backface-visibility: hidden;
+}
+
+.back {
+    width: 100%;
+    height: 100%;
+    /*background-image: linear-gradient(100deg, #2b6340, #3aa572);*/
+    background-image: url('https://i.postimg.cc/jdhNsWj3/2024-04-20-190021831.png');
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 1;
+    backface-visibility: hidden;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.map-img {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.card-no {
+    font-size: 35px;
+    margin-top: 150px;
+    word-spacing: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.card-holder {
+    font-size: 12px;
+    margin-top: 40px;
+}
+
+.name {
+    font-size: 18px;
+    margin-top: 40px;
+}
+
+.X {
+    font-size: 18px;
+    margin-top: 0x;
+}
+
+.bar {
+    background: #222;
+    margin-left: -30px;
+    margin-right: -30px;
+    height: 60px;
+    margin-top: 10px;
+}
+
+.card-cvv {
+    margin-top: 85px;
+}
+
+.card-cvv div {
+    flex: 1;
+}
+
+.card-cvv img {
+    width: 100%;
+    display: block;
+    line-height: 0;
+}
+
+.card-cvv p {
+    background: #fff;
+    color: #000;
+    font-size: 22px;
+    padding: 10px 20px;
+}
+
+.card-text {
+    margin-top: 30px;
+    font-size: 17px;
+}
+
+.signature {
+    margin-top: 28px;
+    font-size: 25px;
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.card:hover .card-inner {
+    transform: rotateY(-180deg);
+}
