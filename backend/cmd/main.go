@@ -1,39 +1,32 @@
 package main
 
 import (
-	"context"
 	"donPass/backend/internal/config"
-	p "donPass/backend/internal/storage/postgres/sqlc"
-	"fmt"
+	profile "donPass/backend/internal/http-server/handlers/accounts/getProfile"
+	signin "donPass/backend/internal/http-server/handlers/accounts/signIn"
+	signup "donPass/backend/internal/http-server/handlers/accounts/signUp"
+	"donPass/backend/internal/storage/postgres"
 
-	"github.com/jackc/pgx/v5"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 )
-
-var dbConn *pgx.Conn
 
 func main() {
 	// *Init config
 	cfg := config.MustLoad()
 	log.Infof("starting: %v", cfg)
 
-	fmt.Println(cfg.DBAddress)
-
 	// *Init db
-	dbURL := fmt.Sprintf("postgres://%s:%s@%s/%s", cfg.User, cfg.Password, cfg.DBAddress, cfg.NameDB)
-	dbConn, err := pgx.Connect(context.Background(), dbURL)
-	if err != nil {
-		log.Fatal("Cannot connect to db:", err)
-	}
-	_ = p.New(dbConn)
+	postgres.New()
 
 	// *Handlers
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
 
-	e.POST("/user/signUp", )
+	e.POST("/user/signUp", signup.SignUp)
+	e.POST("/user/signIn", signin.SignIn)
+	e.GET("/user/getProfile", profile.GetProfile)
 
 	// *Run server
 	e.Logger.Infof("Listening on %s", cfg.HTTPAddress)
