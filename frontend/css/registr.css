@@ -95,7 +95,7 @@ ul{
     width: 378px;
     height: 40px;
     padding: 10px;
-    margin: 0 auto 0 auto;
+    margin: 0 auto 1em auto;
     box-sizing: border-box;
     border: none;
     background: rgba(170, 167, 167, 0.23);
@@ -160,7 +160,7 @@ ul{
     font-style: normal;
     font-variation-settings:
         "slnt" 0;
-    margin: 30px auto 5em auto;
+    margin: 30px auto 3em auto;
 }
 .next2{
     display: flex;

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/frontend/css/enter.css">
+    <link rel="stylesheet" href="/frontend/css/registr.css">
     <link rel="stylesheet" href="/frontend/css/normalize.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
                         <a href="/frontend/pages/yslygi.html" class="menu_link">Услуги</a>
                     </li>
                     <li class="menu_item">
-                        <a href="#" class="menu_link">Афиша</a>
+                        <a href="/frontend/pages/aficha.html" class="menu_link">Афиша</a>
                     </li>
                     <li class="menu_item">
                         <a href="#" class="menu_link">Власть</a>
@@ -43,12 +43,34 @@
                     </li>
                     
                 </ul>
-                <a  class="icon_link" href="#"><img class="icon" src="/frontend/images/Frame 3.png" alt="иконка"></a>
+                <a  class="icon_link" href="/frontend/index.html"><img class="icon" src="/frontend/images/Frame 3.png" alt="иконка"></a>
             </nav>
         </div>
     </header>
 
-
+<main class="main">
+    <setion class="phone_vvod">
+        <div class="container">
+            <div class="phone_vvod_rect">
+                <img src="/frontend/images/TSI-logo_zelenoe-obychnoe 1.png" alt="лого" class="phone_vvod_img">
+                <div class="phone_logo_img"><img src="/frontend/images/registr.png" alt=""></div>
+                <div class="phone_vvod_form">
+                <form action="/frontend/pages/lk.html" class="phone_vvod_form_in">
+                    <input class="tel" type="text" name="fio" id="fio" placeholder="ФИО">
+                    <input class="tel" type="tel" name="phone_num" id="phone_num" placeholder="Номер телефона">
+                    <input class="tel" type="text" name="pass" id="pass" placeholder="Введите пароль">
+                    <input class="tel" type="text" name="pass_ag" id="pass_ag" placeholder="Введите пароль">
+                    <div class="agree_stor"><label class="agree_l" for="agree">Я согласен(а) на обработку персональных данных</label>
+                       <input type="checkbox" name="agree"> 
+                    </div>
+                    <input class="next" type="submit" value="Продолжить" >
+                </form>
+                </div>
+                <img class="wave" src="/frontend/images/wave.png" alt="волна">
+            </div>
+        </div>
+    </setion>
+</main>
 
     <footer class="footer">
         <div class="container">
