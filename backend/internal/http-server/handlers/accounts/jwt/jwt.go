@@ -32,6 +32,7 @@ func GenerateToken(number, password string) (string, error) {
 	}
 
 	if account.Password != signup.GeneratePasswordHash(password) {
+		log.Infof("%v,  %v",account.Password, signup.GeneratePasswordHash(password))
 		return "", echo.NewHTTPError(http.StatusUnauthorized, "Invalid credentials")
 	}
 

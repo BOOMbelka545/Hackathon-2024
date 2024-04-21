@@ -23,6 +23,7 @@ func SignIn(c echo.Context) error {
 
 	jwt, err := jwt.GenerateToken(input.Number, input.Password)
 	if err != nil {
+		log.Errorf("Some problem: %v", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "Internal server error")
 	}
 
