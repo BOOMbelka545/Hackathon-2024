@@ -2,7 +2,9 @@ a{
     text-decoration: none;
     color: inherit;
 }
-
+body{
+    scroll-behavior: smooth;
+}
 ul{
     margin: 0;
     padding: 0;
@@ -123,7 +125,84 @@ ul{
     color: #000;
     margin:1em 2em 1em 2em ;
 }
+.hosp{
+    display: flex;
+    justify-content: space-around;
+    margin: 3em 0 3em 0;
+}
+.hosp_zagl, .lgota_zagl{
+    display: flex;
+    margin: 1em 0 0 0;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 2em;
+    z-index: 1;
+    font-family: "Inter", sans-serif;
+    font-size: 68px;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+    color: #fff;
+}
+.hosp_zagl::before, .lgota_zagl::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: rgba(43, 84, 57, 1);
+    filter: blur(10px);
+    border-radius: 20px;
+}
+.hosp_n1, .hosp_n2, .hosp_n3{
+    display: flex;
+    position: relative;
+    z-index: 1;
+    width: max-content;
+    height: max-content;
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+    color: #000;
+}
 
+.hosp_n1::before, .hosp_n2::before, .hosp_n3::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: rgba(243, 243, 251, 1);
+    filter: blur(10px);
+    border-radius: 20px;
+}
+.hosp_text{
+    margin: 1em 1em 1em 1em;
+}
+.hosp_text1{
+    margin: 1em 2em 1em 2em;
+}
+.hosp_n_img{
+    display: flex;
+    margin: 1em auto 1em auto;
+}
+.lgota_text{
+    font-family: "Inter", sans-serif;
+    font-size: 32px;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+    color: #fff;
+}
 .footer{
     display: flex;
     align-items: center;

@@ -11,6 +11,8 @@ ul{
 }
 .header{
     padding: 3px 0px;
+    position: relative;
+    z-index: 2;
     font-size: 24px;
     line-height: normal;
     background-color: rgba(43, 84, 57, 1);
@@ -98,6 +100,8 @@ ul{
 }
 .kvad1, .kvad2, .kvad3{
     display: flex;
+    position: relative;
+    z-index: 2;
     flex-wrap: wrap;
     flex-direction: column;
     margin: 152px 0 152px 38px;

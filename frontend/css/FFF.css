@@ -1,17 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=josefin+Sans:wght@400;500;600;700&display=swap');
 
-
-.container_a {
-    width: fit-content;
-    background: #ffffff;
-    display: flex;
-    align-items: right;
-    justify-content: right;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
-.card_a {
-    width: 500px;
-    height: 300px;
+.container_a {
+    min-height: 0vh;
+    width: 97%;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    position: relative;
+    margin-top: -42%;
+}
+
+.card {
+    width: 620px;
+    height: 400px;
     color: #ffffff;
     cursor: pointer;
     perspective: 1000px;
@@ -44,7 +53,7 @@
     width: 100%;
     height: 100%;
     /*background-image: linear-gradient(100deg, #2b6340, #3aa572);*/
-    background-image: url('https://i.postimg.cc/jdhNsWj3/2024-04-20-190021831.png');
+    background-image: url('https://i.postimg.cc/3R3p06Bh/df7a33ae-55cc-496a-9821-a8900a28c5bb.jpg');
     background-size: cover;
     position: absolute;
     top: 0;
@@ -141,4 +150,38 @@
 
 .card:hover .card-inner {
     transform: rotateY(-180deg);
+}
+
+.klaksa1 {
+    min-height: 0vh;
+    width: 110%;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    position: relative;
+    margin-top: -25.65%;
+}
+
+.klaksa2 {
+    width: 900px;
+    height: 600px;
+    color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.klaksa3 {
+    width: 100%;
+    height: 115%;
+    background-image: url('https://i.postimg.cc/4xG6VmwV/Vector.png');
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: -1;
+    backface-visibility: hidden;
 }
