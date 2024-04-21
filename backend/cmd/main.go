@@ -34,6 +34,7 @@ func main() {
 	e.PUT("/payment", payment.Payment)
 	e.DELETE("/user/delete", deleteAccount.DeleteAccount)
 	e.PUT("/user/update-password", updatepassword.UpdateAccountPassword)
+	e.POST("/refresh", signin.RefreshToken)
 
 	// *Run server
 	e.Logger.Infof("Listening on %s", cfg.HTTPAddress)

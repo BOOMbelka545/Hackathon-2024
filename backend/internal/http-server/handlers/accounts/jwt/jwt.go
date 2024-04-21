@@ -4,6 +4,7 @@ import (
 	"context"
 	signup "donPass/backend/internal/http-server/handlers/accounts/signUp"
 	"donPass/backend/internal/storage/postgres"
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -16,7 +17,6 @@ import (
 
 const (
 	signinKey = "klnljdsflskesdkljlskdf"
-	tokenTTL  = 12 * time.Hour
 )
 
 type tokenClaims struct {
@@ -24,15 +24,16 @@ type tokenClaims struct {
 	UserId int `json:"user_id"`
 }
 
-func GenerateToken(number, password string) (string, error) {
+func GenerateToken(number, password string, tm time.Duration) (string, error) {
 	// Check if account doesn't exist
 	account, err := postgres.DB.GetAccountByNumber(context.Background(), number)
 	if err == pgx.ErrNoRows {
+		fmt.Println(err)
 		return "", echo.NewHTTPError(http.StatusNotFound, "User doesn't exist")
 	}
 
 	if account.Password != signup.GeneratePasswordHash(password) {
-		log.Infof("%v,  %v",account.Password, signup.GeneratePasswordHash(password))
+		log.Infof("%v,  %v", account.Password, signup.GeneratePasswordHash(password))
 		return "", echo.NewHTTPError(http.StatusUnauthorized, "Invalid credentials")
 	}
 
@@ -40,10 +41,11 @@ func GenerateToken(number, password string) (string, error) {
 
 	claims["authorized"] = true
 	claims["id"] = account.ID
-	claims["exp"] = time.Now().Add(tokenTTL).Unix()
+	claims["exp"] = time.Now().Add(tm).Unix()
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := at.SignedString([]byte(signinKey))
 	if err != nil {
+		fmt.Println(err)
 		return "", err
 	}
 	return token, nil
