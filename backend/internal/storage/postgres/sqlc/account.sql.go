@@ -209,7 +209,7 @@ RETURNING id, number, password, first_name, name, last_name, balance, created_at
 
 type UpdateAccountPasswordParams struct {
 	ID       int64
-	Password string
+	Password string `json:"new_password"`
 }
 
 func (q *Queries) UpdateAccountPassword(ctx context.Context, arg UpdateAccountPasswordParams) (Account, error) {

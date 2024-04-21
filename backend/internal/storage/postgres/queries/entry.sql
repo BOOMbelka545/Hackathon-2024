@@ -1,17 +1,18 @@
--- name: CreateEntry :one
-INSERT INTO entries (
+-- name: CreatePayment :one
+INSERT INTO payments (
   account_id,
-  amount
+  amount,
+  place
 ) VALUES (
-  $1, $2
+  $1, $2, $3
 ) RETURNING *;
 
--- name: GetEntry :one
-SELECT * FROM entries
+-- name: GetPayment :one
+SELECT * FROM payments
 WHERE id = $1 LIMIT 1;
 
--- name: ListEntries :many
-SELECT * FROM entries
+-- name: ListPayments :many
+SELECT * FROM payments
 WHERE account_id = $1
 ORDER BY id
 LIMIT $2

@@ -9,76 +9,81 @@ import (
 	"context"
 )
 
-const createEntry = `-- name: CreateEntry :one
-INSERT INTO entries (
+const createPayment = `-- name: CreatePayment :one
+INSERT INTO payments (
   account_id,
-  amount
+  amount,
+  place
 ) VALUES (
-  $1, $2
-) RETURNING id, account_id, amount, created_at
+  $1, $2, $3
+) RETURNING id, account_id, amount, place, created_at
 `
 
-type CreateEntryParams struct {
+type CreatePaymentParams struct {
 	AccountID int64
 	Amount    int64
+	Place     string
 }
 
-func (q *Queries) CreateEntry(ctx context.Context, arg CreateEntryParams) (Entry, error) {
-	row := q.db.QueryRow(ctx, createEntry, arg.AccountID, arg.Amount)
-	var i Entry
+func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {
+	row := q.db.QueryRow(ctx, createPayment, arg.AccountID, arg.Amount, arg.Place)
+	var i Payment
 	err := row.Scan(
 		&i.ID,
 		&i.AccountID,
 		&i.Amount,
+		&i.Place,
 		&i.CreatedAt,
 	)
 	return i, err
 }
 
-const getEntry = `-- name: GetEntry :one
-SELECT id, account_id, amount, created_at FROM entries
+const getPayment = `-- name: GetPayment :one
+SELECT id, account_id, amount, place, created_at FROM payments
 WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetEntry(ctx context.Context, id int64) (Entry, error) {
-	row := q.db.QueryRow(ctx, getEntry, id)
-	var i Entry
+func (q *Queries) GetPayment(ctx context.Context, id int64) (Payment, error) {
+	row := q.db.QueryRow(ctx, getPayment, id)
+	var i Payment
 	err := row.Scan(
 		&i.ID,
 		&i.AccountID,
 		&i.Amount,
+		&i.Place,
 		&i.CreatedAt,
 	)
 	return i, err
 }
 
-const listEntries = `-- name: ListEntries :many
-SELECT id, account_id, amount, created_at FROM entries
+const listPayments = `-- name: ListPayments :many
+SELECT id, account_id, amount, place, created_at FROM payments
 WHERE account_id = $1
 ORDER BY id
 LIMIT $2
 OFFSET $3
 `
 
-type ListEntriesParams struct {
+type ListPaymentsParams struct {
 	AccountID int64
 	Limit     int32
 	Offset    int32
 }
 
-func (q *Queries) ListEntries(ctx context.Context, arg ListEntriesParams) ([]Entry, error) {
-	rows, err := q.db.Query(ctx, listEntries, arg.AccountID, arg.Limit, arg.Offset)
+func (q *Queries) ListPayments(ctx context.Context, arg ListPaymentsParams) ([]Payment, error) {
+	rows, err := q.db.Query(ctx, listPayments, arg.AccountID, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Entry
+	var items []Payment
 	for rows.Next() {
-		var i Entry
+		var i Payment
 		if err := rows.Scan(
 			&i.ID,
 			&i.AccountID,
 			&i.Amount,
+			&i.Place,
 			&i.CreatedAt,
 		); err != nil {
 			return nil, err
@@ -89,4 +94,18 @@ func (q *Queries) ListEntries(ctx context.Context, arg ListEntriesParams) ([]Ent
 		return nil, err
 	}
 	return items, nil
+}
+
+type DeleteAllPayments struct {
+	AccountID int64
+}
+
+const deletePayments = `-- name: DeletePayments :exec
+DELETE FROM payments
+WHERE account_id = $1
+`
+
+func (q *Queries) DeletePayments(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, deletePayments, id)
+	return err
 }
